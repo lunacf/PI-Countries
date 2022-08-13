@@ -1,16 +1,10 @@
 // Importar todos los routers;
 const { Router } = require('express');
 const { Country, Activity } = require('../db.js');
-const sequelize = require('sequelize');
-const express = require('express');
-const router = require('./index.js');
+const {Op} = require('sequelize');
+const router = Router();
 
-//declaro variable para  url
-const URL_API = 'https://restcountries.com/v3/all';
-
-const routerCountry = express.Router();
-
-routerCountry("/", async (req, res) => {
+router.get("/", async (req, res) => {
     let nameCountry = req.query.name;
     //si existe
     if (nameCountry) {
@@ -38,7 +32,7 @@ routerCountry("/", async (req, res) => {
     }
 })
 
-routerCountry.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
         if (id.length > 2) {
@@ -46,14 +40,14 @@ routerCountry.get('/:id', async (req, res) => {
             if (element) {
                 var IdCountries = {
                     id: element.id,
-                    Nombre: element.name,
-                    Bandera: element.img,
-                    Continente: element.continente,
-                    Capital: element.capital,
-                    Subregion: element.subregion,
-                    Area: element.area,
-                    Poblacion: element.poblacion,
-                    Actividads: element.Actividads
+                    name: element.name,
+                    flag: element.flag,
+                    continent: element.continent,
+                    capital: element.capital,
+                    subregion: element.subregion,
+                    area: element.area,
+                    population: element.population,
+                    Activity: element.Activity
                 }
                 return res.json(IdCountries)
             }
@@ -64,3 +58,5 @@ routerCountry.get('/:id', async (req, res) => {
         console.log(err);
     }
 })
+
+module.exports = router;
