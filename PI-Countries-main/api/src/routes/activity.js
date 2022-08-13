@@ -1,39 +1,38 @@
 const { Router } = require('express');
 const { Country, Activity } = require('../db.js');
-const sequelize = require('sequelize');
-const express = require('express');
 
-const routerActivity = express.Router();
+const router = Router();
 
-routerActivity.post('/', async (req, res) => {
-    const { nameAct, difficulty, duracion, temporada, countryid } = req.body
+router.post('/', async (req, res) => {
+    const { nameAct, difficulty, duration, season, id } = req.body;
+
     try {
-        if (name && difficulty && duracion && temporada) {
-            let activityCreated = await Actividads.create({
-                name,
+        if (nameAct && difficulty && duration && season) {
+            let activityCreated = await Activity.create({
+                nameAct,
                 difficulty,
                 duration,
                 season,
             })
             try {
-                let country = await Country.findAll({ where: { id: countryid } })
-                await activityCreated.addCountries(country)
-                res.send(country)
+                let country = await Country.findAll({ where: { id: id } })
+                await activityCreated.addCountries(country);
+                res.send(country);
             } catch (error) {
                 console.log(error)
             }
         }
         else {
-            res.status(404).send("Error no ingresaste los campos correctamente")
+            res.status(404).send("Fields entered are not correct")
         }
-    } catch (error) {
-        console.log(error)
+    } catch (e) {
+        console.log(e);
     }
 })
 
-routerActivity.get('/', async (req, res) => {
-    let actividadesCreadas = await Actividads.findAll({})
-    res.json(actividadesCreadas)
+router.get('/', async (req, res) => {
+    let activitiesOk = await Activity.findAll({})
+    res.json(activitiesOk)
 })
 
 module.exports = router;
