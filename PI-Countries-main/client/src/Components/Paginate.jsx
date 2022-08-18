@@ -2,7 +2,7 @@ import React from 'react';
 import HomeStyle from "./styles/Home.module.css";
 
 export default function Paginate({countriesXPage, selectedCountry, paginate}){
-    const numberPage =[]
+    const numberPage = [];
 
     for (let e = 1; e <= Math.ceil(selectedCountry/countriesXPage); e++) {
         numberPage.push(e)

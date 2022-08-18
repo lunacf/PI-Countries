@@ -1,58 +1,67 @@
 import axios from 'axios';
+const BASE_API_PATH = "http://localhost:4000";
 
-export function getCountries() {
-    return async function (dispatch) {
-        var json = await axios.get("http://localhost:3001/country");
-        return dispatch({
-            type: 'GET_COUNTRIES',
-            payload: json.data
+export const getCountries = () => dispatch => {
+    // return fetch(`${BASE_API_PATH}/country`)
+    // .then(r => r.json())
+    // .then(data => {
+    //     dispatch({
+    //         type: "GET_COUNTRIES",
+    //         payload: data, 
+    //     })
+    // })
+    return axios.get(`${BASE_API_PATH}/country`)
+    .then(r => r.data)
+    .then(data => {
+        dispatch({
+            type: "GET_COUNTRIES",
+            payload: data, 
         })
-    }
+    })
+    .catch(console.error)
 }
 
 
-export function getCountryActivity() {
-    return async function (dispatch) {
-        var json = await axios.get("http://localhost:3001/activity");
-        console.log('json', json.data);
-        return dispatch({
-            type: 'GET_ACTIVITY',
-            payload: json.data
+export const getCountryActivity = () => dispatch => {
+    return axios.get(`${BASE_API_PATH}/activity`)
+    .then(r => r.data)
+    .then(data => {
+        dispatch({
+            type: "GET_ACTIVITY",
+            payload: data, 
         })
-    }
+    })
+    .catch(console.error)
 }
 
-export function getCountryDetail(id) {
-    return async function (dispatch) {
-        try {
-            var json = await axios.get("http://localhost:3001/country/" + id)
-            return dispatch({
-                type: 'GET_COUNTRY_DETAIL',
-                payload: json.data
-            })
-        } catch (e) {
-            console.log(e);
-        }
-    }
+export const getCountryDetail = (id) => dispatch => {
+    return axios.get(`${BASE_API_PATH}/country/${id}`)
+    .then(r => r.data)
+    .then(data => {
+        dispatch({
+            type: "GET_COUNTRY_DETAIL",
+            payload: data, 
+        })
+    })
+    .catch(console.error)
 }
 
-export function getSearchCountries(name) {
-    return async function (dispatch) {
-        try {
-            var json = await axios.get("http://localhost:3001/country?name=" + name)
-            return dispatch({
-                type: "GET_SEARCH_COUNTRIES",
-                payload: json.data
-            })
-        } catch (e) {
-            console.log(e);
-        }
-    }
+export const getSearchCountries = (name) => dispatch =>{
+   
+    return axios.get(`${BASE_API_PATH}/country?name=${name}`)
+    .then(r => r.data)
+    .then(data => {
+        dispatch({
+            type: "GET_SEARCH_COUNTRIES",
+            payload: data, 
+        })
+    })
+    .catch(console.error)
 }
 
 export function postActivity(payload) {
     return async function (dispatch) {
-        var json = await axios.post("http://localhost:3001/activity", payload);
+        var json = await axios.post(`${BASE_API_PATH}/activity`, payload);
         return dispatch({
             type: 'POST_ACTIVITY',
             payload: json

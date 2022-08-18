@@ -10,7 +10,7 @@ import LandingPage from './Components/LandingPage';
 function App() {
   return (
     <BrowserRouter>
-    <div classname='App'>
+    <div className='App'>
       <Switch>
       <Route exact path='/' component={LandingPage}></Route>
       <Route exact path='/home' component={Home}></Route>

@@ -1,6 +1,7 @@
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 const axios = require('axios');
+
 const { Country } = require('./src/db.js');
 // Syncing all the models at once.
 
@@ -18,12 +19,14 @@ const getInfoFromApi = async function () {
       population: e.population,
       region: e.region
     }})
-  const bulkAux = await Country.bulkCreate(infoDB);
+    await Country.bulkCreate(infoDB);
+    console.log("allCountriesLoad");
   }
 
 conn.sync({ force: true }).then(() => {
   getInfoFromApi();
-  server.listen(3001, () => {
-    console.log('%s listening at 3001'); // eslint-disable-line no-console
+  server.listen(4000, () => {
+    console.log('%s listening at 4000'); // eslint-disable-line no-console
   });
 });
+
