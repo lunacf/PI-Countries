@@ -11,7 +11,7 @@ export default function Detail(props) {
         dispatch(getCountryDetail(props.match.params.id))
     },[dispatch, props.match.params.id])
 
-    const Country = useSelector((state)=>state.Detail)
+    const Country = useSelector((state)=>state.detail)
 
     return(
         <div>

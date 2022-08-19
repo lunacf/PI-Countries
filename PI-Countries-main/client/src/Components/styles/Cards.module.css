@@ -1,0 +1,9 @@
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+  .cards:hover {
+    transform: scale(1.2);
+    box-shadow: 0 5px 10px rgb(173, 45, 45);
+  }

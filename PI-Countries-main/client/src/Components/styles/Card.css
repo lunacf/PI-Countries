@@ -3,10 +3,9 @@
     width: 18rem;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    background-color: rgba(245, 245, 220, 0.376);
+    background-color: rgba(30, 109, 129, 0.376);
 }
 
 h3{

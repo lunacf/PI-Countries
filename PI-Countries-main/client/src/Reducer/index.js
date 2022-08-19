@@ -1,43 +1,49 @@
 const initialState = {
     countries: [],
-    allCountries: [],
+    filteredCountries: [],
     activity: [],
-    detail: []
-}
+    detail: [],
+    post: {},
+};
 //guardo dos veces los paises para que cuando los busque en options no se me pise paises con los paises filtrados
-function rootReducer (state = initialState, action) {
-    switch(action.type){
+export default function rootReducer (state = initialState, {type, payload}) {
+    switch(type){
     case 'GET_COUNTRIES':
         return{
             ...state,
-            countries: action.payload,
-            allCountries : action.payload
+            countries: payload,
+            allCountries : payload
         }
     case 'GET_SEARCH_COUNTRIES':
         return{
             ...state,
-            countries: action.payload
+            countries: payload
         } 
     case 'GET_ACTIVITY':
         return{
             ...state,
-            activity : action.payload
+            activity : payload
         }
     case 'FILTER_CONTINENT':
-        const fullCountries = state.allCountries
-        const currentStateFilter = action.payload === 'All' ? fullCountries : fullCountries.filter(el => el.continent === action.payload)
-        return{
-            ...state,
-            countries: currentStateFilter
+        if(payload !== 'All'){
+            return{
+                ...state,
+                filteredCountries: state.countries.filter(
+                    (e) => e.continent === payload
+                ), //todos
+            };
+        } else{
+            return { ...state, filteredCountries: state.countries};
         }
     case 'POST_ACTIVITY':
         return {
-            ...state
-        }
+            ...state,
+            post: payload,
+        };
    
     case 'FILTER_POPULATION':
-    const population = action.payload === 'descendant' ? state.countries.sort((a,b) => a.population - b.population) :
-        state.countries.sort((a,b) => b.population - a.population)
+    const population = payload === 'descendant' ? state.countries.sort((a,b) => a.population - b.population) :
+        state.countries.sort((b,a) => b.population - a.population)
         return{
             ...state,
             countries: population
@@ -45,7 +51,7 @@ function rootReducer (state = initialState, action) {
     case 'FILTER_ACTIVITY':
         const array = []
          state.allCountries.map(el => el.Activity.forEach(element => {
-        if (element.name === action.payload) {
+        if (element.name === payload) {
             array.push(el)
         }
     }))
@@ -54,7 +60,7 @@ function rootReducer (state = initialState, action) {
         countries: array
     }
     case 'FILTER_ALFA':
-        const nameAlfa = action.payload === 'asc' ? state.countries.sort(function (a, b) {
+        const nameAlfa = payload === 'asc' ? state.countries.sort(function (a, b) {
         if (a.name > b.name) {
         return 1;     
         }
@@ -78,7 +84,7 @@ function rootReducer (state = initialState, action) {
     case 'GET_COUNTRY_DETAIL':
         return{
             ...state,
-            detail: action.payload
+            detail: payload
         }
         default:
             return state;
@@ -86,4 +92,3 @@ function rootReducer (state = initialState, action) {
     
 }
 
-export default rootReducer;

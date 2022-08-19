@@ -8,6 +8,7 @@ import Paginate from './Paginate';
 import SearchBar from './SearchBar';
 import HomeStyle from './styles/Home.module.css';
 import { activityFilter, alfaFilter, countryFilter, getCountries, getCountryActivity, populationFilter } from '../actions/index';
+import Cards from './Cards';
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -15,11 +16,11 @@ export default function Home() {
     const [currentPage, setCurrentPage] = useState(1) //1ª pag
     const [, setOrder] = useState('');
     const [, setAfromZ] = useState('');
-    const activityName = useSelector((state)=>state.activity);
-    const test = activityName.map((e)=> e.name);
-    
+    const activityName = useSelector((state) => state.activity);
+    const test = activityName.map((e) => e.name);
+
     const [countriesXPage] = useState(9) //number of cards in screen
-    const paginate = (numberPage)=>{setCurrentPage(numberPage)}
+    const paginate = (numberPage) => { setCurrentPage(numberPage) }
     const lastCountry = currentPage * countriesXPage
     const firstCountry = lastCountry - countriesXPage
     const currentPageCountry = selectedCountry.slice(firstCountry, lastCountry)
@@ -29,8 +30,8 @@ export default function Home() {
     useEffect(() => {
         dispatch(getCountries())
         dispatch(getCountryActivity())
-        
-    
+
+
     }, [dispatch])
 
     function handleResetClick(e) {
@@ -60,6 +61,7 @@ export default function Home() {
     };
 
     return (
+
         <div className='container'>
             <div className='searchbar'>
                 <SearchBar />
@@ -67,7 +69,7 @@ export default function Home() {
             </div>
             <div className=''>
                 {unique.length === 0 ?
-                    <p>Create activities to filter them</p>
+                    <p className={HomeStyle.btn}>Create activities to filter them</p>
                     : <select className={HomeStyle.btn} onChange={e => handleActivities(e)}>
                         {unique.map((e) => (
                             <option value={e} > {e} </option>
@@ -99,15 +101,30 @@ export default function Home() {
                     selectedCountry={selectedCountry.length}
                     paginate={paginate}>
                 </Paginate></div>
+
             {currentPageCountry?.map(el => {
                 return (
-                    <div key={el.id} className='card'>
+                    <div key={el.id} className='cards'>
                         <Link to={'/home/' + el.id}>
                             <Card name={el.name} continent={el.continent} flag={el.flag} population={el.population} />
+                            <div className='cards'>
+                                {currentPageCountry.map(c=> <Card
+                                    name={c.name}
+                                    capital={c.capital}
+                                    subregion={c.subregion}
+                                    continent={c.continent}
+                                    flag={c.flag}
+                                    id={c.id}
+                                    key={c.id}
+                                    />)}
+                            </div>
                         </Link>
                     </div>
+
                 )
             })}
+
+
         </div>
     )
 }

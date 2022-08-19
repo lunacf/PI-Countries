@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from 'react';
 import { postActivity, getCountryActivity } from '../actions';
-import HomeStyle from './styles/Home.module.css';
-import './styles/Activities.css';
+import HomeStyle from './styles/Activities.module.css';
 
 
 function validate(input) {
@@ -31,7 +30,7 @@ export default function CreateActivity() {
         difficulty: "",
         duration: "",
         season: "",
-        id: []
+        id:[]
     })
 
     useEffect(() => {
@@ -65,21 +64,26 @@ export default function CreateActivity() {
         })
     }
 
+   /**
+    * The function is called when the user clicks the submit button. It prevents the default action of
+    * the submit button, which is to refresh the page. It then validates the input and dispatches the
+    * postActivity action. Finally, it resets the input to an empty object.
+    */
     function handleSubmit(e) {
         e.preventDefault()
-        setError(validate)(
+        setError(validate(
             {
                 ...input,
                 [e.target.value]: e.target.value
             }
-        )
+        ))
         dispatch(postActivity(input))
         setInput({
             name: "",
             difficulty: "",
             duration: "",
             season: "",
-            id: []
+            id:[]
         })
     }
 
@@ -102,7 +106,7 @@ export default function CreateActivity() {
                     </div>
                     <div>
                         <label>Difficulty:</label>
-                        <select className={HomeStyle.btn} onChange={(e) => handleDifficulty(e)}>
+                        <select className={HomeStyle.ActivityLetters} onChange={(e) => handleDifficulty(e)}>
                             <option value='1'>1</option>
                             <option value='2'>2</option>
                             <option value='3'>3</option>
@@ -127,12 +131,12 @@ export default function CreateActivity() {
                     </div>
                     <label>Countries: <select className={HomeStyle.btn} onChange={(e) => handleSelect(e)}>
                         {countriesSelected.map((e) => (
-                            <option value={e.id} >{e.name} </option>
+                            <option value={e.id}>{e.name} </option>
                         ))}
                     </select></label>
                     <button className={HomeStyle.btn} type='submit' onClick={(e) => handleSubmit(e)}>Add +</button>
                 </form>
-                {input?.countryid?.map(e =>
+                {input?.id?.map(e =>
                     <div className={HomeStyle.Country}>
                         <h6>{e}</h6>
                         <button className={HomeStyle.btn} onClick={() => handleDelete(e)}>X</button>

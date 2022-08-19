@@ -70,10 +70,12 @@ export function postActivity(payload) {
 }
 
 export function countryFilter(payload) {
-    return {
-        type: 'FILTER_CONTINENT',
-        payload
-    }
+    return function(dispatch) {
+        dispatch({
+            type: 'FILTER_CONTINENT',
+            payload
+        });
+    };
 }
 
 export function populationFilter(payload) {
@@ -84,15 +86,21 @@ export function populationFilter(payload) {
 }
 
 export function alfaFilter(payload) {
-    return {
-        type: 'FILTER_ALFA',
-        payload
+    return function(dispatch) {
+        dispatch({
+            type: 'FILTER_ALFA',
+            payload
+        })
+        
     }
 }
 
 export function activityFilter(payload) {
-    return {
-        type: 'FILTER_ACTIVITY',
-        payload
+    return function(dispatch) {
+        dispatch({
+            
+            type: 'FILTER_ACTIVITY',
+            payload
+        })
     }
 }

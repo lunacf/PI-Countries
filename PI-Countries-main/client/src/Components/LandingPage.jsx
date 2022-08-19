@@ -5,10 +5,10 @@ import HomeStyle from "./styles/Home.module.css"
 
 export default function landingPage() {
     return (
-        <div className='aa'>
-            <h1>Countries - App</h1>
+        <div className='titulo'>
+            <h1>PI - COUNTRIES - APP</h1>
             <Link to='/home'>
-                <button className={HomeStyle.btn}>Enter</button>
+                <button className={HomeStyle.btnEnter}>Enter</button>
             </Link>
         </div>
     )
